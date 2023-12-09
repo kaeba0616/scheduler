@@ -1,9 +1,11 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:scheduler/constants/constant.dart';
 import 'package:scheduler/screens/calendar.dart';
 import 'package:scheduler/services/naver_api.dart';
 
@@ -37,7 +39,7 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   String region = "서울";
-
+  String selectedValue = "서울";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,31 +54,127 @@ class _StartPageState extends State<StartPage> {
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Region", style: TextStyle(fontSize: 20)),
+                  Center(
+                    child: Icon(
+                      Icons.my_location_outlined,
+                      size: 250,
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                 ],
               ),
             ),
-            // const DropDownButton(),
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter your region',
+            DropdownButtonHideUnderline(
+              child: DropdownButton2<String>(
+                isExpanded: true,
+                hint: const Row(
+                  children: [
+                    Icon(Icons.list, size: 16, color: Colors.black),
+                    SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        "Select Item",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                items: regionName
+                    .map(
+                      (String regionName) => DropdownMenuItem<String>(
+                        value: regionName,
+                        child: Text(
+                          regionName,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    )
+                    .toList(),
+                value: selectedValue,
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedValue = value!;
+                    region = value;
+                  });
+                },
+                buttonStyleData: ButtonStyleData(
+                  height: 60,
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 14, right: 14),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: const BorderRadius.all(Radius.circular(14)),
+                    color: Colors.white,
+                  ),
+                  elevation: 2,
+                ),
+                iconStyleData: const IconStyleData(
+                  icon: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                  ),
+                  iconSize: 20,
+                  iconEnabledColor: Colors.black,
+                  iconDisabledColor: Colors.grey,
+                ),
+                dropdownStyleData: DropdownStyleData(
+                  maxHeight: 200,
+                  width: 400,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(14)),
+                    color: Colors.white,
+                  ),
+                  offset: const Offset(0, 0),
+                  scrollbarTheme: ScrollbarThemeData(
+                    radius: const Radius.circular(40),
+                    thickness: MaterialStateProperty.all<double>(6),
+                    thumbVisibility: MaterialStateProperty.all<bool>(true),
+                  ),
+                ),
+                menuItemStyleData: const MenuItemStyleData(
+                  height: 40,
+                  padding: EdgeInsets.only(left: 14, right: 14),
+                ),
               ),
-              onSubmitted: (value) {
-                setState(() {
-                  region = value;
-                  print(region);
-                });
-              },
             ),
+
+            // TextField(
+            //   decoration: const InputDecoration(
+            //     border: OutlineInputBorder(),
+            //     labelText: 'Enter your region',
+            //   ),
+            //   onSubmitted: (value) {
+            //     setState(() {
+            //       region = value;
+            //       print(region);
+            //     });
+            //   },
+            // ),
             const SizedBox(
               height: 30,
             ),
             ElevatedButton(
-              child: const Text('Events'),
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  'Events',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(

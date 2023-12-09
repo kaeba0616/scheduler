@@ -94,23 +94,42 @@ class _DetailScreenState extends State<DetailScreen> {
                 future: eventD,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MapScreen(
-                              address: widget.prfnm,
-                              id: getid(snapshot.data as EventDetail),
-                            ),
-                            fullscreenDialog: true,
+                    return Column(
+                      children: [
+                        DetailWidget(
+                          mt20id: widget.mt20id,
+                          event: snapshot.data as EventDetail,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.white),
                           ),
-                        );
-                      },
-                      child: DetailWidget(
-                        mt20id: widget.mt20id,
-                        event: snapshot.data as EventDetail,
-                      ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Text(
+                              '위치 보기',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.lightGreen,
+                              ),
+                            ),
+                          ),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapScreen(
+                                address: widget.prfnm,
+                                id: getid(snapshot.data as EventDetail),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     );
                   }
                   return const Center(
