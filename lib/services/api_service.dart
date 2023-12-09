@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:scheduler/models/event.dart';
 import 'package:scheduler/models/eventDetail.dart';
+import 'package:scheduler/models/facility.dart';
 import 'package:xml/xml.dart';
 
 class ApiService {
   static const String BASE_URL = "kopis.or.kr";
   static const String PATH = "/openApi/restful/pblprfr";
+  static const String fPATH = "/openApi/restful/prfplc";
   DateFormat format = DateFormat("yyyyMMdd");
   static late final String regionCode;
 
@@ -56,7 +60,7 @@ class ApiService {
 
   static Future<EventDetail> getEventById(String id) async {
     final queryParameters = {
-      'service': dotenv.get("API_KEY"),
+      'service': dotenv.env["API_KEY"]!,
     };
 
     final url = Uri.https(BASE_URL, "$PATH/$id", queryParameters);
@@ -66,6 +70,23 @@ class ApiService {
       final document = XmlDocument.parse(res.body);
       final event = document.findAllElements("db").single;
       return EventDetail.fromXml(event);
+    }
+    throw Error();
+  }
+
+  static Future<facility> getFacilityById(String id) async {
+    final queryParameters = {
+      'service': dotenv.env["API_KEY"]!,
+    };
+
+    final url = Uri.https(BASE_URL, "$fPATH/$id", queryParameters);
+    print(url);
+    final res = await http.get(url);
+    log(res.body.toString());
+    if (res.statusCode == 200) {
+      final document = XmlDocument.parse(res.body);
+      final event = document.findAllElements("db").single;
+      return facility.fromXml(event);
     }
     throw Error();
   }

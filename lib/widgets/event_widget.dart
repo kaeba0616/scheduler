@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:scheduler/screens/eventDetail.dart';
 
 class EventWidget extends StatelessWidget {
-  final String mt20id, prfnm, poster;
+  final String mt20id, prfnm, poster, fcltynm;
   const EventWidget({
     super.key,
     required this.mt20id,
     required this.prfnm,
     required this.poster,
+    required this.fcltynm,
   });
 
   @override
@@ -21,6 +22,7 @@ class EventWidget extends StatelessWidget {
               mt20id: mt20id,
               prfnm: prfnm,
               poster: poster,
+              fcltynm: fcltynm,
             ),
             fullscreenDialog: true,
           ),

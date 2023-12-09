@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:scheduler/utils.dart';
+import 'package:scheduler/models/event.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 /// Example events.

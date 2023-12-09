@@ -30,8 +30,9 @@ class EventDetail {
         dtguidance = xml.findElements('dtguidance').first.text,
         prfcast = xml.findElements('prfcast').first.text;
 
-  @override
-  String toString() => prfnm;
+  String getFId() {
+    return mt10id;
+  }
   // EventDetail.fromJson(Map<String, dynamic> xml)
   //     : mt20id = xml['mt20id'],
   //       mt10id = xml['mt10id'],

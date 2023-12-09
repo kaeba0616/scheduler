@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:scheduler/screens/calendar.dart';
-import 'package:scheduler/widgets/map_widget.dart';
+import 'package:scheduler/services/naver_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await NaverApi.init();
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
@@ -47,7 +48,6 @@ class _StartPageState extends State<StartPage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            // const NaverMapApp(),
             Container(
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,6 @@ class _StartPageState extends State<StartPage> {
               ),
             ),
             // const DropDownButton(),
-
             TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),

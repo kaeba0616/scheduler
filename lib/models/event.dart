@@ -1,5 +1,14 @@
 import 'package:xml/xml.dart';
 
+class Event {
+  final String title;
+
+  const Event(this.title);
+
+  @override
+  String toString() => title;
+}
+
 class EventModel {
   final String mt20id;
   final String prfnm;
@@ -7,14 +16,14 @@ class EventModel {
   final String prfpdto;
   final String poster;
   final String genrenm;
-  // final String fcltynm;
+  final String fcltynm;
 
   EventModel.fromXml(XmlElement xml)
       : mt20id = xml.findElements('mt20id').first.text,
         prfnm = xml.findElements('prfnm').first.text,
         prfpdfrom = xml.findElements('prfpdfrom').first.text,
         prfpdto = xml.findElements('prfpdto').first.text,
-        // fcltynm = xml.findElements('fcltynm').first.text,
+        fcltynm = xml.findElements('fcltynm').first.text,
         poster = xml.findElements('poster').first.text,
         genrenm = xml.findElements('genrenm').first.text;
 

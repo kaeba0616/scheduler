@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
+import 'package:scheduler/models/event.dart';
 import 'package:scheduler/screens/eventScreen.dart';
-import 'package:scheduler/utils.dart';
 import 'package:scheduler/widgets/calendar_eventButton.dart';
 import 'package:table_calendar/table_calendar.dart';
 

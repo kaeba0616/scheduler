@@ -1,44 +1,135 @@
-// import 'dart:async';
-// import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:scheduler/models/facility.dart';
+import 'package:scheduler/services/api_Service.dart';
+
+class MapWidget extends StatefulWidget {
+  final String id;
+
+  const MapWidget({
+    super.key,
+    required this.id,
+  });
+
+  @override
+  State<MapWidget> createState() => _MapWidgetState();
+}
+
+class _MapWidgetState extends State<MapWidget> {
+  late final Future<facility> fac1;
+  @override
+  void initState() {
+    print("initState- map_widget");
+    super.initState();
+    fac1 = ApiService.getFacilityById(widget.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Scaffold(
+        body: FutureBuilder(
+          future: fac1,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator()); // 로딩 인디케이터 표시
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}'); // 에러 메시지 표시
+            } else {
+              final NLatLng nLatLng = NLatLng(double.parse(snapshot.data!.la),
+                  double.parse(snapshot.data!.lo));
+              return SizedBox(
+                width: 400,
+                child: NaverMap(
+                  options: NaverMapViewOptions(
+                    initialCameraPosition: NCameraPosition(
+                      target: nLatLng,
+                      zoom: 16,
+                    ),
+                  ),
+                  onMapReady: (controller) {
+                    print("onMapReady - 로딩됨");
+                  },
+                ),
+              );
+            }
+          },
+        ),
+      ),
+    );
+    // FutureBuilder<NLatLng>(
+    //   future: futureNLatLng,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return const Center(
+    //           child: CircularProgressIndicator()); // 로딩 인디케이터 표시
+    //     } else if (snapshot.hasError) {
+    //       return Text('Error: ${snapshot.error}'); // 에러 메시지 표시
+    //     } else {
+    //       NLatLng nLatLng = snapshot.data!;
+    //       return Scaffold(
+    //         body: SizedBox(
+    //           width: 200,
+    //           child: NaverMap(
+    //             options: NaverMapViewOptions(
+    //               initialCameraPosition: NCameraPosition(
+    //                 target: nLatLng,
+    //                 zoom: 16,
+    //               ),
+    //             ),
+    //             onMapReady: (controller) {
+    //               print("onMapReady - 로딩됨");
+    //             },
+    //           ),
+    //         ),
+    //       );
+    //     }
+    //   },
+    // );
+  }
+}
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_naver_map/flutter_naver_map.dart';
+// import 'package:scheduler/services/naver_api.dart';
 
-// // 지도 초기화하기
-// Future<void> _initialize() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await NaverMapSdk.instance.initialize(
-//       clientId: '<client id>', // 클라이언트 ID 설정
-//       onAuthFailed: (e) => log("네이버맵 인증오류 : $e", name: "onAuthFailed"));
-// }
-
-// class NaverMapApp extends StatelessWidget {
-//   const NaverMapApp({
+// class MapWidget extends StatefulWidget {
+//   final String address;
+//   const MapWidget({
 //     super.key,
+//     required this.address,
 //   });
 
-//   void initState() {
-//     _initialize();
+//   @override
+//   State<MapWidget> createState() => _MapWidgetState();
+// }
+
+// class _MapWidgetState extends State<MapWidget> {
+//   late NLatLng NLLg;
+
+//   @override
+//   void initState() async {
+//     super.initState();
+//     NLatLng? NLLg = await NaverApi.Geocode(widget.address);
+
 //   }
 
 //   @override
 //   Widget build(BuildContext context) {
-//     // NaverMapController 객체의 비동기 작업 완료를 나타내는 Completer 생성
-//     final Completer<NaverMapController> mapControllerCompleter = Completer();
-
-//     return MaterialApp(
-//       home: Scaffold(
-//         body: NaverMap(
-//           options: const NaverMapViewOptions(
-//             indoorEnable: true, // 실내 맵 사용 가능 여부 설정
-//             locationButtonEnable: false, // 위치 버튼 표시 여부 설정
-//             consumeSymbolTapEvents: false, // 심볼 탭 이벤트 소비 여부 설정
+//     return Scaffold(
+//       body: SizedBox(
+//         width: 200,
+//         child: NaverMap(
+//           options: NaverMapViewOptions(
+//             initialCameraPosition: NCameraPosition(
+//               target: NLLg,
+//               zoom: 16,
+//             ),
 //           ),
-//           onMapReady: (controller) async {
-//             // 지도 준비 완료 시 호출되는 콜백 함수
-//             mapControllerCompleter
-//                 .complete(controller); // Completer에 지도 컨트롤러 완료 신호 전송
-//             log("onMapReady", name: "onMapReady");
+//           onMapReady: (controller) {
+//             print("onMapReady - 로딩됨");
 //           },
 //         ),
 //       ),

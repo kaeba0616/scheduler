@@ -67,20 +67,6 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 
-  ListView makeList(AsyncSnapshot<List<EventModel>> snapshot) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: snapshot.data!.length,
-      itemBuilder: (context, index) {
-        print(index);
-        var event = snapshot.data![index];
-        return EventWidget(
-            mt20id: event.mt20id, prfnm: event.prfnm, poster: event.poster);
-      },
-      separatorBuilder: (context, index) => const SizedBox(width: 40),
-    );
-  }
-
   ListView makeList1(AsyncSnapshot<List<EventModel>> snapshot) {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
@@ -89,7 +75,10 @@ class _EventScreenState extends State<EventScreen> {
         print(index);
         var event = snapshot.data![index];
         return EventWidget(
-            mt20id: event.mt20id, prfnm: event.prfnm, poster: event.poster);
+            mt20id: event.mt20id,
+            prfnm: event.prfnm,
+            poster: event.poster,
+            fcltynm: event.fcltynm);
       },
       separatorBuilder: (context, index) => const SizedBox(width: 40),
     );
@@ -103,7 +92,11 @@ class _EventScreenState extends State<EventScreen> {
         print(index);
         var event = snapshot.data![index + snapshot.data!.length ~/ 2];
         return EventWidget(
-            mt20id: event.mt20id, prfnm: event.prfnm, poster: event.poster);
+          mt20id: event.mt20id,
+          prfnm: event.prfnm,
+          poster: event.poster,
+          fcltynm: event.fcltynm,
+        );
       },
       separatorBuilder: (context, index) => const SizedBox(width: 40),
     );
