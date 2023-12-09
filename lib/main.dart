@@ -42,7 +42,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🙌 Event Search App 🙌'),
+        title: const Center(child: Text('🙌 Event Search App 🙌')),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

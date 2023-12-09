@@ -40,16 +40,23 @@ class _MapWidgetState extends State<MapWidget> {
             } else {
               final NLatLng nLatLng = NLatLng(double.parse(snapshot.data!.la),
                   double.parse(snapshot.data!.lo));
+              final marker = NMarker(
+                id: "1",
+                position: nLatLng,
+              );
+
               return SizedBox(
                 width: 400,
                 child: NaverMap(
                   options: NaverMapViewOptions(
+                    mapType: NMapType.basic,
                     initialCameraPosition: NCameraPosition(
                       target: nLatLng,
                       zoom: 16,
                     ),
                   ),
                   onMapReady: (controller) {
+                    controller.addOverlay(marker);
                     print("onMapReady - 로딩됨");
                   },
                 ),
@@ -59,80 +66,5 @@ class _MapWidgetState extends State<MapWidget> {
         ),
       ),
     );
-    // FutureBuilder<NLatLng>(
-    //   future: futureNLatLng,
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return const Center(
-    //           child: CircularProgressIndicator()); // 로딩 인디케이터 표시
-    //     } else if (snapshot.hasError) {
-    //       return Text('Error: ${snapshot.error}'); // 에러 메시지 표시
-    //     } else {
-    //       NLatLng nLatLng = snapshot.data!;
-    //       return Scaffold(
-    //         body: SizedBox(
-    //           width: 200,
-    //           child: NaverMap(
-    //             options: NaverMapViewOptions(
-    //               initialCameraPosition: NCameraPosition(
-    //                 target: nLatLng,
-    //                 zoom: 16,
-    //               ),
-    //             ),
-    //             onMapReady: (controller) {
-    //               print("onMapReady - 로딩됨");
-    //             },
-    //           ),
-    //         ),
-    //       );
-    //     }
-    //   },
-    // );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_naver_map/flutter_naver_map.dart';
-// import 'package:scheduler/services/naver_api.dart';
-
-// class MapWidget extends StatefulWidget {
-//   final String address;
-//   const MapWidget({
-//     super.key,
-//     required this.address,
-//   });
-
-//   @override
-//   State<MapWidget> createState() => _MapWidgetState();
-// }
-
-// class _MapWidgetState extends State<MapWidget> {
-//   late NLatLng NLLg;
-
-//   @override
-//   void initState() async {
-//     super.initState();
-//     NLatLng? NLLg = await NaverApi.Geocode(widget.address);
-
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SizedBox(
-//         width: 200,
-//         child: NaverMap(
-//           options: NaverMapViewOptions(
-//             initialCameraPosition: NCameraPosition(
-//               target: NLLg,
-//               zoom: 16,
-//             ),
-//           ),
-//           onMapReady: (controller) {
-//             print("onMapReady - 로딩됨");
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

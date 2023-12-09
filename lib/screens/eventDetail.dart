@@ -41,7 +41,10 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.prfnm),
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Text(widget.prfnm),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
