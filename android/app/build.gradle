@@ -45,7 +45,10 @@ android {
         applicationId "com.example.scheduler"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        
+        // minSdkVersion flutter.minSdkVersion
+        // flutter.naver_map_sdk_minversion 21 이어서 21로 변경
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

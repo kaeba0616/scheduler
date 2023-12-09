@@ -2,19 +2,26 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
+import 'package:scheduler/screens/eventScreen.dart';
+import 'package:scheduler/utils.dart';
+import 'package:scheduler/widgets/calendar_eventButton.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../utils.dart';
-
 class CalendarScreen extends StatefulWidget {
-  const CalendarScreen({super.key});
+  const CalendarScreen({
+    super.key,
+    this.regionStr,
+  });
 
+  final regionStr;
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late final ValueNotifier<List<Event>> _selectedEvents;
+  // late Future<List<EventModel>> events;
+  // late Future<List<EventDetail>> eventDetail;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -26,9 +33,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   void initState() {
     super.initState();
-
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    print("calendar ${widget.regionStr}");
   }
 
   @override
@@ -37,8 +44,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
     super.dispose();
   }
 
+  // List<EventModel> _getEventsForDay(DateTime day) {
+  //   // Implementation example
+  //   return kEvents[day] ?? [];
+  // }
+
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
+    print("getEventsForDay");
     return kEvents[day] ?? [];
   }
 
@@ -88,11 +101,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TableCalendar - Events'),
+        title: const Text('👍지역별행사 달력👍'),
       ),
       body: Column(
         children: [
           TableCalendar<Event>(
+            // TableCalendar<Event>(
+            //
+
             firstDay: kFirstDay,
             lastDay: kLastDay,
             focusedDay: _focusedDay,
@@ -138,7 +154,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ListTile(
-                        onTap: () => print('${value[index]}'),
+                        // 클릭하면 이벤트 detail 페이지로 이동
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => EventScreen(
+                              regionEvent: widget.regionStr,
+                              selectedDate: _selectedDay!,
+                            ),
+                          ),
+                        ),
                         title: Text('${value[index]}'),
                       ),
                     );
