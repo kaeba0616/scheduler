@@ -56,7 +56,7 @@ class _StartPageState extends State<StartPage> {
                 children: [
                   Center(
                     child: Icon(
-                      Icons.my_location_outlined,
+                      Icons.calendar_month_outlined,
                       size: 250,
                       color: Colors.orangeAccent,
                     ),
