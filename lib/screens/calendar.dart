@@ -1,6 +1,8 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:scheduler/models/event.dart';
 import 'package:scheduler/screens/eventScreen.dart';
@@ -101,7 +103,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('👍지역별행사 달력👍'),
+        title: Text('👍${widget.regionStr} 행사 달력👍'),
       ),
       body: Column(
         children: [

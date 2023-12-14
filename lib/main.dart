@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '🙌 Event Search App 🙌',
+      title: '🙌 Event Calendar 🙌',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -44,7 +44,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('🙌 Event Search App 🙌')),
+        title: const Center(child: Text('🙌 Event Calendar 🙌')),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
