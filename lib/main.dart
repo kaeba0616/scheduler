@@ -149,19 +149,6 @@ class _StartPageState extends State<StartPage> {
                 ),
               ),
             ),
-
-            // TextField(
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     labelText: 'Enter your region',
-            //   ),
-            //   onSubmitted: (value) {
-            //     setState(() {
-            //       region = value;
-            //       print(region);
-            //     });
-            //   },
-            // ),
             const SizedBox(
               height: 30,
             ),
