@@ -7,13 +7,7 @@
   - android api level : 33 (tiramisu)
   - phone : Pixel XL
 
-- .env 파일을 만들어서 아래와 같이 작성해주세요.
-
-  ```
-  API_KEY="kopis api key"
-  NAVER_MAP_CLIENT_ID="your client-id"
-  NAVER_MAP_CLIENT_SECRET="your client-secret"
-  ```
+- .env 파일에 각 api 키를 발급받아 작성해주세요
 
 ## File structure
 
